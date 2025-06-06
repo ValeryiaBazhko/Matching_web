@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Thank You!";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="success-icon mb-4">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <h1 class="display-4 mb-4">Thank You!</h1>
+            
+            <p class="lead mb-4">
+                You have successfully completed the evaluation session!
+            </p>
+            
+            <p class="text-muted mb-5">
+                You evaluated <strong>@ViewBag.CompletedPairs pairs</strong> of descriptions.
+                Your feedback will help improve our matching algorithm.
+            </p>
+            
+            <a href="@Url.Action("Index")" class="btn btn-primary btn-lg px-5">
+                Start New Session
+            </a>
+        </div>
+    </div>
+</div>

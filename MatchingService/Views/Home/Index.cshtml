@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Matching Research";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Matching Research Study</h1>
+            <p class="lead mb-4">
+                Help us improve our matching algorithm by evaluating pairs of descriptions.
+                You'll see 50 pairs and decide if they should match or not.
+            </p>
+            <p class="text-muted mb-5">
+                This should take about 5-10 minutes. Your responses are anonymous and will be used for research purposes only.
+            </p>
+            
+            <form method="post" asp-action="StartSession">
+                <button type="submit" class="btn btn-primary btn-lg px-5">
+                    Start Evaluation
+                </button>
+            </form>
+            
+            <div class="mt-5">
+                <a href="@Url.Action("ImportData")" class="btn btn-outline-secondary">
+                    Import Data (Admin)
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

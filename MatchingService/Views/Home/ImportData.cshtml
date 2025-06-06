@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Import Data";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">Import Descriptions from CSV</h2>
+            
+            @if (!string.IsNullOrEmpty(ViewBag.Success))
+            {
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> @ViewBag.Success
+                </div>
+            }
+            
+            @if (!string.IsNullOrEmpty(ViewBag.Error))
+            {
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i> @ViewBag.Error
+                </div>
+            }
+            
+            @if (ViewBag.Processing == true)
+            {
+                <div class="alert alert-info">
+                    <i class="fas fa-spinner fa-spin"></i> Processing large CSV file... This may take a few minutes.
+                </div>
+            }
+            
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" id="uploadForm">
+                        <div class="mb-3">
+                            <label for="columnNumber" class="form-label">Column Number</label>
+                            <input type="number" class="form-control" id="columnNumber" name="columnNumber" 
+                                   value="@(ViewBag.ColumnNumber ?? 22)" min="1" max="100" required>
+                            <div class="form-text">
+                                Enter the column number containing descriptions (1-based, default: 22)
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="maxRecords" class="form-label">Maximum Records (Optional)</label>
+                            <input type="number" class="form-control" id="maxRecords" name="maxRecords" 
+                                   value="@(ViewBag.MaxRecords ?? 0)" min="0" max="1000000" placeholder="0 = import all">
+                            <div class="form-text">
+                                Limit import to first N records (0 = import all, 5000 recommended for testing)
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="csvFile" class="form-label">Choose CSV File</label>
+                            <input type="file" class="form-control" id="csvFile" name="csvFile" 
+                                   accept=".csv,.txt" required>
+                            <div class="form-text" id="fileInfo">
+                                Maximum file size: 200MB. Large files (100MB+) may take several minutes to process.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary" id="importBtn">
+                                <i class="fas fa-upload"></i> Import Data
+                            </button>
+                            <a href="@Url.Action("Index")" class="btn btn-secondary ms-2">
+                                Back to Home
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h5>Import Options:</h5>
+                <ul>
+                    <li><strong>Quick Test:</strong> Set max records to 5,000 for fast testing</li>
+                    <li><strong>Full Import:</strong> Leave max records as 0 to import all data</li>
+                    <li><strong>File size limit:</strong> 200MB maximum</li>
+                    <li><strong>Column:</strong> Data will be imported from column @(ViewBag.ColumnNumber ?? 22)</li>
+                    <li><strong>Filtering:</strong> Only descriptions longer than 10 characters will be imported</li>
+                    <li><strong>Progress:</strong> Watch the console for real-time progress updates</li>
+                </ul>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-lightbulb"></i> 
+                    <strong>Tip:</strong> For testing your matching interface, try importing just 5,000 records first. 
+                    This will be much faster and give you plenty of pairs to evaluate!
+                </div>
+                
+                <h6>Example CSV structure:</h6>
+                <pre class="bg-light p-3 rounded">
+col1,col2,...,col22,...
+data,data,...,"Description text longer than 10 chars",...
+data,data,...,"Another meaningful description",...
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Show file info when selected
+document.getElementById('csvFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const fileInfo = document.getElementById('fileInfo');
+    
+    if (file) {
+        const sizeMB = (file.size / 1_000_000).toFixed(1);
+        fileInfo.innerHTML = `Selected: ${file.name} (${sizeMB}MB). Maximum file size: 200MB.`;
+        fileInfo.className = 'form-text text-success';
+    } else {
+        fileInfo.innerHTML = 'Maximum file size: 200MB. Large files (100MB+) may take several minutes to process.';
+        fileInfo.className = 'form-text';
+    }
+});
+
+// Handle form submission
+document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    const fileInput = document.getElementById('csvFile');
+    const btn = document.getElementById('importBtn');
+    
+    if (!fileInput.files || fileInput.files.length === 0) {
+        e.preventDefault();
+        alert('Please select a CSV file before submitting.');
+        return false;
+    }
+    
+    const file = fileInput.files[0];
+    if (file.size > 200_000_000) {
+        e.preventDefault();
+        alert(`File too large: ${(file.size / 1_000_000).toFixed(1)}MB. Maximum size is 200MB.`);
+        return false;
+    }
+    
+    // Show processing state
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    btn.disabled = true;
+    
+    // Show progress message
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-info mt-3';
+    alertDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading and processing file... This may take several minutes for large files.';
+    document.querySelector('.card-body').appendChild(alertDiv);
+});
+</script>

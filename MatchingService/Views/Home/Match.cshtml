@@ -1,0 +1,59 @@
+﻿@model MatchingApp.Models.MatchingPair
+
+@{
+    ViewData["Title"] = "Match Evaluation";
+}
+
+<div class="container-fluid vh-100 d-flex align-items-center">
+    <div class="row w-100">
+        <div class="col-12 text-center mb-4">
+            <h2>Should these descriptions match?</h2>
+            <div class="progress mb-3" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" 
+                     style="width: @(((double)Model.CurrentPairIndex / Model.TotalPairs) * 100)%">
+                </div>
+            </div>
+            <p class="text-muted">Pair @Model.CurrentPairIndex of @Model.TotalPairs</p>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card description-card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Description A</h5>
+                </div>
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <p class="description-text">@Model.Description1.Content</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card description-card h-100">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Description B</h5>
+                </div>
+                <div class="card-body d-flex align-items-center justify-content-center">
+                    <p class="description-text">@Model.Description2.Content</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-12 text-center">
+            <form method="post" asp-action="SubmitEvaluation">
+                <input type="hidden" name="sessionId" value="@Model.SessionId" />
+                <input type="hidden" name="desc1Id" value="@Model.Description1.Id" />
+                <input type="hidden" name="desc2Id" value="@Model.Description2.Id" />
+                
+                <button type="submit" name="isMatch" value="true" 
+                        class="btn btn-success btn-lg me-4 px-5">
+                    <i class="fas fa-heart"></i> Match
+                </button>
+                
+                <button type="submit" name="isMatch" value="false" 
+                        class="btn btn-danger btn-lg px-5">
+                    <i class="fas fa-times"></i> No Match
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

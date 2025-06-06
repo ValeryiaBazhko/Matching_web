@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "1Fj8mwI2r+aIuGhp+E92WUfTyG75zWOrogD7sZhP3sE=",
+  "Source": "MatchingService",
+  "BasePath": "_content/MatchingService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MatchingService\\wwwroot",
+      "Source": "MatchingService",
+      "ContentRoot": "C:\\Users\\lerab\\RiderProjects\\MatchingService\\MatchingService\\wwwroot\\",
+      "BasePath": "_content/MatchingService",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\lerab\\RiderProjects\\MatchingService\\MatchingService\\wwwroot\\css\\site.css",
+      "SourceId": "MatchingService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\lerab\\RiderProjects\\MatchingService\\MatchingService\\wwwroot\\",
+      "BasePath": "_content/MatchingService",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    }
+  ]
+}
