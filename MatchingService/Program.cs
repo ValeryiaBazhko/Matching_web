@@ -33,9 +33,9 @@ builder.WebHost.ConfigureKestrel(options =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 
-if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
+if (!string.IsNullOrEmpty(connectionString) && (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://")))
 {
-    // Parse Railway/Heroku style connection string for PostgreSQL
+    // Parse Render/Railway/Heroku style connection string for PostgreSQL
     var uri = new Uri(connectionString);
     var host = uri.Host;
     var port = uri.Port;
