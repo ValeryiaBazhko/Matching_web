@@ -85,6 +85,7 @@ C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\Ma
 C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\MatchingService.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\MatchingService.RazorAssemblyInfo.cache
 C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\MatchingService.RazorAssemblyInfo.cs
+C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\MatchingService.sourcelink.json
 C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\lerab\RiderProjects\MatchingService\MatchingService\obj\Debug\net8.0\staticwebassets\msbuild.MatchingService.Microsoft.AspNetCore.StaticWebAssets.props

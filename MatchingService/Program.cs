@@ -31,12 +31,11 @@ builder.WebHost.ConfigureKestrel(options =>
 
 // Add Entity Framework
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? Environment.GetEnvironmentVariable("DATABASE_URL")
-    ?? "Host=localhost;Database=matchingapp;Username=postgres;Password=buhun12072004";
+    ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 
 if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgres://"))
 {
-    // Parse Heroku/Railway style connection string for PostgreSQL
+    // Parse Railway/Heroku style connection string for PostgreSQL
     var uri = new Uri(connectionString);
     var host = uri.Host;
     var port = uri.Port;
@@ -45,6 +44,10 @@ if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("post
     var password = uri.UserInfo.Split(':')[1];
     
     connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+}
+else if (string.IsNullOrEmpty(connectionString))
+{
+    connectionString = "Host=localhost;Database=matchingapp;Username=postgres;Password=postgres";
 }
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
