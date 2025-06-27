@@ -29,13 +29,11 @@ builder.WebHost.ConfigureKestrel(options =>
     options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(5);
 });
 
-// Add Entity Framework
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 
 if (!string.IsNullOrEmpty(connectionString) && (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://")))
 {
-    // Parse Render/Railway/Heroku style connection string for PostgreSQL
     var uri = new Uri(connectionString);
     var host = uri.Host;
     var port = uri.Port;
@@ -57,7 +55,6 @@ builder.Services.AddScoped<MatchingApp.Services.MatchingService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -85,12 +82,10 @@ try
         
         logger.LogInformation("Applying database migrations...");
         
-        // Apply any pending migrations
         await context.Database.MigrateAsync();
         
         logger.LogInformation("Database migrations applied successfully");
         
-        // Verify connection
         var canConnect = await context.Database.CanConnectAsync();
         if (canConnect)
         {
@@ -103,7 +98,7 @@ catch (Exception ex)
 {
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogError(ex, "Database migration failed: {Message}", ex.Message);
-    throw; // Stop the app if database setup fails
+    throw; 
 }
 
 app.Run();

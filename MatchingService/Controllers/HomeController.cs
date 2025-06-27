@@ -66,8 +66,8 @@ namespace MatchingApp.Controllers
         }
 
         [HttpPost]
-        [RequestSizeLimit(200_000_000)] // 200MB limit
-        [RequestTimeout(300000)] // 5 minutes timeout
+        [RequestSizeLimit(200_000_000)] 
+        [RequestTimeout(300000)] 
         public async Task<IActionResult> ImportData(IFormFile csvFile, int columnNumber = 22, int maxRecords = 0)
         {
             // Debug information
